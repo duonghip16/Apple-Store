@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongodb';
-import { Product } from '@/models';
+import { getDatabase } from '@/lib/mongodb';
 
 export async function POST() {
   try {
-    await dbConnect();
+    const db = await getDatabase();
 
     // Check if iPhone 16 Pro Max exists
-    const existingProduct = await Product.findOne({ name: 'iPhone 16 Pro Max' });
+    const existingProduct = await db.collection('products').findOne({ name: 'iPhone 16 Pro Max' });
     
     if (!existingProduct) {
       // Add iPhone 16 Pro Max to database
@@ -22,14 +21,16 @@ export async function POST() {
         isActive: true,
         soldCount: 25,
         rating: 5.0,
-        reviewCount: 150
+        reviewCount: 150,
+        createdAt: new Date(),
+        updatedAt: new Date()
       };
 
-      await Product.create(iphone16ProMax);
+      await db.collection('products').insertOne(iphone16ProMax);
     }
 
     // Get all products
-    const products = await Product.find({});
+    const products = await db.collection('products').find({}).toArray();
 
     return NextResponse.json({
       success: true,
