@@ -1,6 +1,5 @@
 "use client"
 
-import type React from "react"
 import { useState, useEffect } from "react"
 import { setupAdminSync } from "./sync-admin"
 import OrdersTab from "./tabs/OrdersTab"
