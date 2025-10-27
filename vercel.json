@@ -1,5 +1,7 @@
 {
-  "buildCommand": "npm ci --legacy-peer-deps && npm run build",
-  "installCommand": "npm ci --legacy-peer-deps",
-  "outputDirectory": ".next"
+  "buildCommand": "npm install --legacy-peer-deps && npm run build",
+  "installCommand": "npm install --legacy-peer-deps",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
